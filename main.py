@@ -57,7 +57,7 @@ def get_website() -> Tuple[str, bool]:
     logger.debug(f"Requesting {url}")
     response = requests.get(url)
 
-    content = response.content.decode("ISO-8859-1")
+    content = response.content.decode("UTF-8")
     logger.debug(content)
 
     return content, True
@@ -100,7 +100,7 @@ def get_water_information(soup: Tuple[Tag, Tag]) -> Optional[WATER_INFORMATION]:
     time = local.localize(time)
     iso_time = time.astimezone(pytz.utc).isoformat()
 
-    temperature = float(temperature_tag.text.strip().split("Â")[0])
+    temperature = float(temperature_tag.text.strip().split("°")[0])
 
     # noinspection PyTypeChecker
     # at this point pycharm doesn't think that the return type can be optional despite the many empty returns beforehand
